@@ -1,4 +1,4 @@
-// App Fire base SDK
+// App Firebase SDK
 
 var addMessage = firebase.functions().httpsCallable('addMessage');
 addMessage({ collection: 'any', doc: 'user', data: {} })

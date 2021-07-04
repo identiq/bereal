@@ -1,3 +1,9 @@
+/**
+ *  Server-side: to deploy on GCP App Engine
+ *  Batch Firebase writes from PubSub subscription
+ */
+const express = require('express');
+
 const cron = require('node-cron');
 const {v1} = require('@google-cloud/pubsub');
 
@@ -7,7 +13,7 @@ const subscriptionName = "projects/identiq/subscriptions/node-cron"
 const subClient = new v1.SubscriberClient();
 
 const firebase = require("firebase-admin");
-const serviceAccount = require("path/to/serviceAccountKey.json");
+const serviceAccount = require("serviceAccountKey.json");
 
 firebase.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -56,4 +62,16 @@ cron.schedule('*/1 * * * * *', async () => {
   }
 
   console.log('Done.');
+});
+
+const app = express();
+
+app.get('/', (req, res) => {
+  res.status(200).send({ping: 'pong'}).end();
+});
+
+// Start the server
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
 });
