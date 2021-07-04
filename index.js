@@ -18,7 +18,7 @@ const db = admin.database();
 const batch = db.batch();
 
 cron.schedule('*/1 * * * * *', async () => {
-  console.log('running every seconds');
+  console.log('Running every seconds');
 
   const formattedSubscription = subClient.subscriptionPath(
       projectId,
